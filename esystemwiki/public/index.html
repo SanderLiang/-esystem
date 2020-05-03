@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <link rel="shortcut icon" href="./favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#000000">
-    <!--
+
+<head>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="./favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#000000">
+  <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="./manifest.json">
-    <!--
+  <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" type="text/css" href="../src/index.css">
+  <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -19,15 +21,191 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <div id="root"></div>
-    <div>123123123123123123</div>
-    <!--
+  <title>React App</title>
+</head>
+
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  <div id="root"></div>
+  <div style="width:68%; margin:0 auto">
+    <h1 class="flex-auto min-width-0 mb-2 mb-md-0 mr-0 mr-md-2 gh-header-title">Python web scraping framework : Scrapy
+    </h1>
+    <p>Author : Sendong Liang</p><br>
+    <div class="flex-shrink-0 col-12 col-md-9 mb-5 mb-md-0">
+      <div id="wiki-body" class="gollum-markdown-content">
+        <div class="markdown-body">
+          <h1 style="border-bottom:1px solid black;">
+            <a id="user-content-1-abstract" class="anchor" href="#1-abstract" aria-hidden="true"><svg
+                class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16"
+                aria-hidden="true">
+              </svg></a><strong>1. Abstract</strong>
+          </h1>
+          <p>The real project usually starts with obtaining data. No matter text mining, machine learning, and data
+            mining, all need data. At this time, web scraping is particularly essential for data collection.
+            Fortunately,
+            Python provides excellent web scraping frameworks -- Scrapy, which can not only scrape the data but also get
+            and clean the data. This article discusses and analyzes the technology framework, architecture composition,
+            operation process, and application examples of Scrapy. This paper expounds the significance and future of it
+            in the data-driven project, and also discusses its existing shortcomings and influences.</p>
+          <h1 style="border-bottom:1px solid black;">
+            <a id="user-content-2-introduction" class="anchor" href="#2-introduction" aria-hidden="true"><svg
+                class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16"
+                aria-hidden="true">
+              </svg></a><strong>2. Introduction</strong>
+          </h1>
+          <p>Web scraping is a crucial way to prepare data and is often used to collect data from the network in daily
+            esystems. This article will discuss a robust web scraping framework, Scrapy.
+            Scrapy is a fast high-level web crawling[1] and web scraping framework used to crawl websites and extract
+            structured data from their pages. It can be used for a wide range of purposes, from data mining to
+            monitoring
+            and automated testing[2].</p>
+          <h3>
+            <a id="user-content-scrapy-architecture" class="anchor" href="#scrapy-architecture" aria-hidden="true"><svg
+                class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16"
+                aria-hidden="true">
+              </svg></a><strong>2.1 Scrapy Architecture</strong>
+          </h3>
+          <p>Scrapy architecture is composed of Scrapy Engine, Scheduler, Downloader, Spider, Item Pipeline, Downloader
+            Middlewares, and Spider Middlewares[3]. As shown in Figure 1.</p>
+          <p><img
+              src="https://camo.githubusercontent.com/375bba9416b487c49341eaace731635ba48fc60b/68747470733a2f2f7365676d656e746661756c742e636f6d2f696d672f6256636f3750"
+              alt="Framework" data-canonical-src="https://segmentfault.com/img/bVco7P" style="width:100%; margin:0 auto"><br>
+              Figure 1. The Scrapy architecture [4]</p>
+          <h3>
+            <a id="user-content-scrapy-process" class="anchor" href="#scrapy-process" aria-hidden="true"><svg
+                class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16"
+                aria-hidden="true">
+              </svg></a><strong>2.2 Scrapy Process</strong>
+          </h3>
+          <p>In Figure 1, the green line is the data flow direction.</p>
+          <ul>
+            <li>Firstly, the Spiders sends the target URL to Scheduler through ScrapyEngine.</li>
+            <li>After the URL sequence is processed in Scheduler, it is handed over to Downloader by ScrapyEngine,
+              Downloader Middlewares (optional, mainly User_Agent, Proxy Agent).</li>
+            <li>Downloader sends a request to the Internet and receives a download response.Give the response to Spiders
+              via ScrapyEngine, SpiderMiddlewares.</li>
+            <li>Spiders processes the response, extracts the data, and gives it to ItemPipeline by ScrapyEngine.</li>
+            <li>The extracted URL is given back to Scheduler by ScrapyEngine for the next loop. The program stops until
+              there is no URL request.</li>
+          </ul>
+          <h3>
+            <a id="user-content-scrapy-example" class="anchor" href="#scrapy-example" aria-hidden="true"><svg
+                class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16"
+                aria-hidden="true">
+              </svg></a><strong>2.3 Scrapy Example</strong>
+          </h3>
+          <p>Scrapy's installation has very detailed instructions on its official website. It is very compatible with
+            Linux, MAC, and Windows systems.</p>
+          <ul>
+            <li>Website :<a href="https://scrapy.org/" rel="nofollow">https://scrapy.org/</a>
+            </li>
+          </ul>
+          <p>Simple Scrapy only needs five steps:</p>
+          <ul>
+            <li>New project: create Scrapy project, command: scratch start project X(name of project).</li>
+            <li>New application: create an application, command: scrapy genspider SpiderName targetWebsite.</li>
+            <li>Define fields: a python file (e.g., items.py), specify the fields of the target site.</li>
+            <li>Make spiders: write spiders (e.g., spider.py) to crawl the web information and analyze the content of
+              the
+              web page.</li>
+            <li>Storage contents：Design pipelines(e.g., pipelines.py) to store crawling contents.</li>
+          </ul>
+          <h1 style="border-bottom:1px solid black;">
+            <a id="user-content-3-findings" class="anchor" href="#3-findings" aria-hidden="true"><svg
+                class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16"
+                aria-hidden="true">
+              </svg></a><strong>3. Findings</strong>
+          </h1>
+          <p>The Scrapy framework, which integrates the general functions of web page collection into each module and
+            leaves out the customized part, liberates the programmer from the tedious process of repeated work. The
+            focus
+            of simple web page scraper is to deal with anti-scraping, large-scale scraping, and efficient and stable
+            scraping. On the other hand, Scrapy uses the Twisted framework to handle network communications, I/O
+            performance is improved, and CPU usage is reduced.</p>
+          <h3>
+            <a id="user-content-twisted-framework" class="anchor" href="#twisted-framework" aria-hidden="true"><svg
+                class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16"
+                aria-hidden="true">
+              </svg></a><strong>Twisted framework</strong>
+          </h3>
+          <p>Using Twisted efficient asynchronous network framework to handle network communication. Twisted provides
+            methods that allow the above operations to be performed without blocking code execution. Figure 2 shows a
+            comparison of twisted and multithreaded code.
+            <img
+              src="https://camo.githubusercontent.com/502e8e7739c8ff254d63efc888dd65fce137deef/68747470733a2f2f696d672d626c6f672e6373646e2e6e65742f3230313630343131313632323230343930"
+              alt="Figure 2" data-canonical-src="https://img-blog.csdn.net/20160411162220490" style="width:100%; margin:0 auto"></br>
+            Figure 2. The comparison of twisted and multithreaded</p>
+          <p>The developers of the operating system have been optimizing the thread operation for decades, and the
+            performance problem is not as significant as before. However, compared with multithreaded programming, it is
+            tough to write thread safe code, so twisted code is far simpler and safer than the multithreaded code.</p>
+          <p>On the positive side, Scrapy is asynchronous, flexible in adjusting the number of concurrent requests, and
+            can improve data mining efficiency by replacing regular expressions with more readable xpaths[5]. Moreover,
+            when writing middleware, uniform complementary filters can be used to make the data more accurate and clean.
+            It is more convenient to use Scrapy to get data on different URLs at the same time. Besides, it is more
+            convenient to debug independently because it supports the shell approach. Finally, the data is stored in the
+            database by pipeline, which makes the storage of data more flexible.</p>
+          <p>However, there are some shortcomings, such as the inability to use it to complete distributed data
+            extraction, high memory consumption, and no effect on Web pages that execute Javascript. On the other hand,
+            due to base on the Twisted framework, an exception to one task does not stop the other task, and another
+            exception handling is difficult to detect.</p>
+          <p>In data-driven projects such as big data and machine learning, data preparation is essential and an
+            important
+            part that cannot be ignored[6]. More and more technologies are being used to prepare databases, and a
+            crucial
+            part of them is to collect data from the network. Compared with traditional web scraping frameworks, Scrapy
+            has received considerable attention and use in many web scraping frameworks due to its simple programming
+            and
+            flexible deployment.</p>
+          <p>Moreover, Many companies have customized scraping frameworks base on Scrapy to complete data collection,
+            and
+            many extensions have also achieved considerable success on GitHub. Such as, Scrapy_redis solves the issue of
+            distributed scraping. Scrapy-splash, which integrates JavaScript and can execute JS in Scrapy.</p>
+          <h1 style="border-bottom:1px solid black;">
+            <a id="user-content-4-conclusions" class="anchor" href="#4-conclusions" aria-hidden="true"><svg
+                class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16"
+                aria-hidden="true">
+              </svg></a><strong>4. Conclusions</strong>
+          </h1>
+          <p>In a data-driven environment, data preparation has become an important task, and web scraping has become a
+            significant way of data collection. Scrapy provides a convenient development environment for data mining,
+            machine learning, and other research and practice. By using the Twisted framework, the efficiency of network
+            communication is improved, and the consumption of computing resources is reduced. Scrapy's architecture, on
+            the one hand, reduces the number of time developers spend on code, allowing developers more time to design
+            and
+            improve crawler's anti-crawling capabilities, data compilation. On the other hand, it offers developers
+            ample
+            customized components and interfaces. Although it is criticized for its memory consumption and its inability
+            to analyze JS code, more esystems can be used with Scrappy to solve these issues. Scrapy plays a vital role
+            in
+            future data mining and data preparation tasks.</p>
+          <h1 style="border-bottom:1px solid black;">
+            <a id="user-content-references" class="anchor" href="#references" aria-hidden="true"><svg
+                class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16"
+                aria-hidden="true">
+              </svg></a><strong>References</strong>
+          </h1>
+          <ol>
+            <li>Spetka, Scott. "The TkWWW Robot: Beyond Browsing". NCSA. Archived from the original on 3 September 2004.
+              Retrieved 21 November 2010.</li>
+            <li>Scrapy, "<a href="https://docs.scrapy.org/en/latest/"
+                rel="nofollow">https://docs.scrapy.org/en/latest/</a>," Scrapy, 2020.</li>
+            <li>Myers, Daniel, and James W. McGuffee. "Choosing scrapy." Journal of Computing Sciences in Colleges 31.1
+              (2015): 83-89.</li>
+            <li>Nisafani, Amna Shifia, Rully Agus Hendrawan, and Arif Wibisono. "Eliciting Data From Website Using
+              Scrapy:
+              An Example." SEMNASTEKNOMEDIA ONLINE 5.1 (2017): 2-1.</li>
+            <li>Kouzis-Loukas, Dimitrios. Learning scrapy. Packt Publishing Ltd, 2016.</li>
+            <li>Pyle, Dorian. Data preparation for data mining. morgan kaufmann, 1999.</li>
+          </ol>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -37,5 +215,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  </body>
+</body>
+
 </html>
